@@ -1,10 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "engines": {
-    "node": "10.16.0"
+    "node": "10.16.0",
+    "npm": "6.9.0"
   },
   "scripts": {
     "start": "nodemon server.js"
@@ -20,6 +19,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.17.6",
+    "node-pre-gyp": "^0.13.0",
     "pg": "^7.11.0"
   }
 }
