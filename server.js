@@ -13,6 +13,7 @@ const db=knex({
   });
 
 const app=express();
+const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -76,5 +77,6 @@ app.post('/login',(req,res)=>{
               return res.status(400).json(err)});
           
  })
+
 app.get('/',(req,res)=>{res.send("Heroku Working")})
- app.listen(process.env.PORT || 3000,()=>{console.log(`Server Listening on ${process.env.PORT}`);})
+ app.listen(PORT);
