@@ -7,10 +7,8 @@ const knex = require('knex');
 const db=knex({
     client: 'pg',
     connection: {
-      host : 'postgresql-tapered-58839',
-      user : 'postgres',
-      password : 'psql',
-      database : 'aianna'
+      connectionString: process.env.DATABASE_URL,
+      ssl: true
     }
   });
 
