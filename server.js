@@ -71,8 +71,10 @@ app.post('/login',(req,res)=>{
         .catch( trx.rollback)})
         .then(user=>{
               return  res.status(200).json("WOOHOO");
-            }).catch(err=>{return res.status(400).json(err)});
+            }).catch(err=>{
+              console.log(err);
+              return res.status(400).json(err)});
           
  })
 app.get('/',(req,res)=>{res.send("Heroku Working")})
- app.listen(process.env.PORT || 3000,()=>{console.log("Server Listening");})
+ app.listen(process.env.PORT || 3000,()=>{console.log(`Server Listening on ${PORT}`);})
