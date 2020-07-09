@@ -34,4 +34,4 @@ def getReviewDetails():
     return make_response(jsonify({"avgrate": rating,"pos":pos,"neg":neg}),200)
 
 if __name__ == "__main__":
-    app.run(host= 'https://limitless-forest-87695.herokuapp.com',port=process.env.PORT,debug=True)
+    app.run(host= 'https://limitless-forest-87695.herokuapp.com',port=5004,debug=True)

@@ -7,13 +7,16 @@ const knex = require('knex');
 const db=knex({
     client: 'pg',
     connection: {
-      connectionString: process.env.DATABASE_URL,
+      host : '127.0.0.1',
+    user : 'postgres',
+    password : 'psql',
+    database : 'aianna',
       ssl: true
     }
   });
 
 const app=express();
-const PORT = process.env.PORT;
+const PORT = 3001;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -28,13 +31,10 @@ app.post('/login',(req,res)=>{
             ).then(user=>{
               if(user[0]===undefined)
               {
-                console.log("ghjgfhjfghf");
                return res.status(400).json("User Not Found");
             }
-                console.log("adsasdfg");
                 const isValid=bcrypt.compareSync(password, user[0].hash);
                 if(isValid){
-                    console.log("pooiuuuytt");
                    return db('users').where( 'email','=', email )
                         .increment('entries',1)
                         .returning(['entries','name'])
@@ -43,7 +43,6 @@ app.post('/login',(req,res)=>{
                         }).catch(err=>{res.status(400).json("Wrong Credentials")})    
                     }
                     else{
-                      console.log("ghjgfhjfghf");
                      return res.status(400).json("User Not Found");
                   }
                 
@@ -52,15 +51,11 @@ app.post('/login',(req,res)=>{
 
  app.post('/signup',(req,res)=>{
     const { name,email,password }=req.body;
-    console.log("Before if");
     if(!email || !password || !name)
     {
-        console.log("!!!");
       return  res.status(400).json("unable to register!!!");
     }
-    console.log("Before hash");
     const hash = bcrypt.hashSync(password, saltRounds);
-    console.log(hash);
     db.transaction(trx=>{
     trx.insert({
             name:name,
@@ -78,5 +73,13 @@ app.post('/login',(req,res)=>{
           
  })
 
-app.get('/',(req,res)=>{res.send("Heroku Working")})
+ app.post('/movie',(req,res)=>{
+   const {mname}=req.body;
+   if(!mname)
+    {
+      return  res.status(400).json("no movie selected");
+    }
+ })
+
+app.get('/',(req,res)=>{res.send(`Heroku Working on ${PORT}`)})
  app.listen(PORT);
